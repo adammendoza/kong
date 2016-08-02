@@ -98,6 +98,17 @@ describe("Utils", function()
   end)
 
   describe("string", function()
+    it("checks valid UTF8 values", function()
+      assert.True(utils.validate_utf8("hello"))
+      assert.True(utils.validate_utf8(123))
+      assert.True(utils.validate_utf8(true))
+      local bytes = {105, 213, 205, 149}
+      local str = ""
+      for _, byte in ipairs(bytes) do
+        str = str..string.char(byte)
+      end
+      assert.False(utils.validate_utf8(str))
+    end)
     describe("random_string()", function()
       it("should return a random string", function()
         local first = utils.random_string()
